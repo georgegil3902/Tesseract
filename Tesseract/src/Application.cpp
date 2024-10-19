@@ -183,6 +183,7 @@ int main(void)
         GLCall(glUseProgram(0));   // Unbind program
         GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));  // Unbind ARRAY_BUFFER
         GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0)); // Unbind ELEMENT_ARRAY_BUFFER
+        
 
         /* Loop until the user closes the window */
         while (!glfwWindowShouldClose(window))
