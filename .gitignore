@@ -1,0 +1,45 @@
+# Build directories
+build/
+*.tlog
+*.obj
+*.pdb
+*.ilk
+*.ipdb
+*.iobj
+
+# Visual Studio generated files
+*.suo
+*.user
+*.rsuser
+*.sln.docstates
+.vs/
+
+# Windows files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Compiled Dynamic Libraries
+*.dll
+*.lib
+*.exp
+
+# Vendor binaries and temporary files
+vendor/**/lib/
+vendor/**/Release/
+vendor/**/Debug/
+
+# Ignore intermediate build folders
+Debug*/ 
+Release*/
+
+# NuGet packages (if applicable)
+packages/
+
+# Logs
+*.log
+
+# Backup files
+*.bak
+*.tmp
