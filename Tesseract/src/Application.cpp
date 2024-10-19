@@ -9,6 +9,7 @@
 #include "Renderer.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
+#include "VertexArray.h"
 
 
 // struct to store or return multiple shader code strings
@@ -80,7 +81,7 @@ static unsigned int CompileShader(unsigned int type, const std::string& source)
     return id;
 }
 
-// Create the vertex shader and fragent shader and link to GLProgram
+// Create the vertex shader and fragment shader and link to GLProgram
 static unsigned int CreateShader(const std::string& vertexShader, const std::string& fragmentShader) 
 {
     unsigned int program = glCreateProgram();   // Create a OpenGL program
@@ -101,7 +102,7 @@ static unsigned int CreateShader(const std::string& vertexShader, const std::str
 // Main program or entry point of application
 int main(void)
 {
-    GLFWwindow* window; // Initialise GLFW Window instance
+    GLFWwindow* window; // Initialize GLFW Window instance
 
     /* Initialize the GLFW library */
     if (!glfwInit())
@@ -112,7 +113,7 @@ int main(void)
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(640, 480, "ProView", NULL, NULL);
+    window = glfwCreateWindow(640, 480, "Tesseract", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -125,7 +126,7 @@ int main(void)
     glfwSwapInterval(1);
 
 
-    // Initialise glew and check if it is GLEW_OK
+    // Initialize glew and check if it is GLEW_OK
     if (glewInit() != GLEW_OK) {
         std::cout << "GLEW Not Okay !!!" << std::endl;
     }
@@ -145,17 +146,13 @@ int main(void)
             2, 3, 0
         };
 
-        // Generating Vertex Array Object
-        unsigned int vao;
-        GLCall(glGenVertexArrays(1, &vao));
-        GLCall(glBindVertexArray(vao));
-
+        // Generating Vertex Array
+        VertexArray va;
         VertexBuffer vb(positions, 4 * 2 * sizeof(float));
 
-        // Binding Vertex attribute object (vao) to Vertex Buffer (buffer)
-        GLCall(glEnableVertexAttribArray(0));   // Enables the use of a vertex attribute array with an index of 0
-        // Associate currently bound vertex buffer with vertex attribute array
-        GLCall(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0));  // attributes associated with vertex buffer with index 0, no of components per vertex attribute (in this case 2), data type of each component, whether data to be normalised, stride(byte offset between consecutive vertex attributes), offset(initial offset of where the data for this attribute starts within the buffer 0 in this case)
+        VertexBufferLayout layout;
+        layout.Push<float>(2);
+        va.AddBuffer(vb, layout);
 
         // Generating Index Buffer
         IndexBuffer ib(indices, 6);
@@ -165,10 +162,10 @@ int main(void)
         unsigned int shader = CreateShader(source.VertexSource, source.FragmentSource); // create shader program using the vertex and fragment shader
         GLCall(glUseProgram(shader));   // Tell OpenGL to use our shader program
 
-        // Retreive location of the uniform within from shader program
+        // Retrieve location of the uniform within from shader program
         int location = glGetUniformLocation(shader, "u_Color");
-        ASSERT(location != -1); // Make sure that location is retreived
-        glUniform4f(location, 0.2f, 0.8f, 0.3f, 1.0f);  // set desired value to uniform as an initialisation
+        ASSERT(location != -1); // Make sure that location is retrieved
+        glUniform4f(location, 0.2f, 0.8f, 0.3f, 1.0f);  // set desired value to uniform as an initialization
 
         // rgb values from 0.0f to 1.0f 
         float r = 0.0f;
@@ -198,7 +195,7 @@ int main(void)
             // GLCall(glEnableVertexAttribArray(0));   // Exact usage forgot... do check it up online later
             // GLCall(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0));  // Check it up online later
 
-            GLCall(glBindVertexArray(vao));
+            va.Bind();
             ib.Bind();
 
             GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));  // Draw call that uses the binded buffers to draw triangles
