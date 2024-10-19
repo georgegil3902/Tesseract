@@ -130,105 +130,107 @@ int main(void)
         std::cout << "GLEW Not Okay !!!" << std::endl;
     }
 
-    // vertex positions
-    float positions[] = {
-        -0.5f, -0.5f,
-         0.5f, -0.5f,
-         0.5f,  0.5f ,
-        -0.5f ,  0.5f,
-    };
-
-    // indices to draw triangles
-    unsigned int indices[] = {
-        0, 1, 2, 
-        2, 3, 0
-    };
-
-    // Generating Vertex Array Object
-    unsigned int vao;
-    GLCall(glGenVertexArrays(1, &vao));
-    GLCall(glBindVertexArray(vao));
-
-    VertexBuffer vb(positions, 4 * 2 * sizeof(float));
-
-    // Binding Vertex attribute object (vao) to Vertex Buffer (buffer)
-    GLCall(glEnableVertexAttribArray(0));   // Enables the use of a vertex attribute array with an index of 0
-    // Associate currently bound vertex buffer with vertex attribute array
-    GLCall(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0));  // attributes associated with vertex buffer with index 0, no of components per vertex attribute (in this case 2), data type of each component, whether data to be normalised, stride(byte offset between consecutive vertex attributes), offset(initial offset of where the data for this attribute starts within the buffer 0 in this case)
-
-    // Generating Index Buffer
-    IndexBuffer ib(indices, 6);
-
-    // Generating shader
-    ShaderProgramSource source = ParseShader("res/shader/Basic.shader");    // read the Basic.shader file into a string and save it into source[ShaderProgramSource struct]
-    unsigned int shader = CreateShader(source.VertexSource, source.FragmentSource); // create shader program using the vertex and fragment shader
-    GLCall(glUseProgram(shader));   // Tell OpenGL to use our shader program
-
-    // Retreive location of the uniform within from shader program
-    int location = glGetUniformLocation(shader, "u_Color");
-    ASSERT(location != -1); // Make sure that location is retreived
-    glUniform4f(location, 0.2f, 0.8f, 0.3f, 1.0f);  // set desired value to uniform as an initialisation
-
-    // rgb values from 0.0f to 1.0f 
-    float r = 0.0f;
-    float g = 0.0f;
-    float b = 0.0f;
-    // rgb increment values
-    float increment_r = 0.03f;
-    float increment_g = 0.05f;
-    float increment_b = 0.07f;
-
-    GLCall(glBindVertexArray(0));   // Unbind program
-    GLCall(glUseProgram(0));   // Unbind program
-    GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));  // Unbind ARRAY_BUFFER
-    GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0)); // Unbind ELEMENT_ARRAY_BUFFER
-
-    /* Loop until the user closes the window */
-    while (!glfwWindowShouldClose(window))
     {
-        /* Render here */
-        glClear(GL_COLOR_BUFFER_BIT);   // Clear the screen
+        // vertex positions
+        float positions[] = {
+            -0.5f, -0.5f,
+             0.5f, -0.5f,
+             0.5f,  0.5f ,
+            -0.5f ,  0.5f,
+        };
 
-        GLCall(glUseProgram(shader));   // Unbind program
-        glUniform4f(location, r, g, b, 1.0f);   // Set the uniform values with r, g, b using uniform location
+        // indices to draw triangles
+        unsigned int indices[] = {
+            0, 1, 2,
+            2, 3, 0
+        };
 
-        // GLCall(glBindBuffer(GL_ARRAY_BUFFER, buffer));  // Unbind ARRAY_BUFFER
-        // GLCall(glEnableVertexAttribArray(0));   // Exact usage forgot... do check it up online later
-        // GLCall(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0));  // Check it up online later
-
+        // Generating Vertex Array Object
+        unsigned int vao;
+        GLCall(glGenVertexArrays(1, &vao));
         GLCall(glBindVertexArray(vao));
-        ib.Bind();
 
-        GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));  // Draw call that uses the binded buffers to draw triangles
-        
-        // Change color values in every loop
-        if (r > 1.0f)
-            increment_r = -0.03f;
-        else if (r < 0.0f)
-            increment_r = 0.03f;
-        r += increment_r;
+        VertexBuffer vb(positions, 4 * 2 * sizeof(float));
 
-        if (g > 1.0f)
-            increment_g = -0.05f;
-        else if (g < 0.0f)
-            increment_g = 0.05f;
-        g += increment_g;
-        
-        if (b > 1.0f)
-            increment_b = -0.07f;
-        else if (b < 0.0f)
-            increment_b = 0.07f;
-        b += increment_b;
+        // Binding Vertex attribute object (vao) to Vertex Buffer (buffer)
+        GLCall(glEnableVertexAttribArray(0));   // Enables the use of a vertex attribute array with an index of 0
+        // Associate currently bound vertex buffer with vertex attribute array
+        GLCall(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0));  // attributes associated with vertex buffer with index 0, no of components per vertex attribute (in this case 2), data type of each component, whether data to be normalised, stride(byte offset between consecutive vertex attributes), offset(initial offset of where the data for this attribute starts within the buffer 0 in this case)
+
+        // Generating Index Buffer
+        IndexBuffer ib(indices, 6);
+
+        // Generating shader
+        ShaderProgramSource source = ParseShader("res/shader/Basic.shader");    // read the Basic.shader file into a string and save it into source[ShaderProgramSource struct]
+        unsigned int shader = CreateShader(source.VertexSource, source.FragmentSource); // create shader program using the vertex and fragment shader
+        GLCall(glUseProgram(shader));   // Tell OpenGL to use our shader program
+
+        // Retreive location of the uniform within from shader program
+        int location = glGetUniformLocation(shader, "u_Color");
+        ASSERT(location != -1); // Make sure that location is retreived
+        glUniform4f(location, 0.2f, 0.8f, 0.3f, 1.0f);  // set desired value to uniform as an initialisation
+
+        // rgb values from 0.0f to 1.0f 
+        float r = 0.0f;
+        float g = 0.0f;
+        float b = 0.0f;
+        // rgb increment values
+        float increment_r = 0.03f;
+        float increment_g = 0.05f;
+        float increment_b = 0.07f;
+
+        GLCall(glBindVertexArray(0));   // Unbind program
+        GLCall(glUseProgram(0));   // Unbind program
+        GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));  // Unbind ARRAY_BUFFER
+        GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0)); // Unbind ELEMENT_ARRAY_BUFFER
+
+        /* Loop until the user closes the window */
+        while (!glfwWindowShouldClose(window))
+        {
+            /* Render here */
+            glClear(GL_COLOR_BUFFER_BIT);   // Clear the screen
+
+            GLCall(glUseProgram(shader));   // Unbind program
+            glUniform4f(location, r, g, b, 1.0f);   // Set the uniform values with r, g, b using uniform location
+
+            // GLCall(glBindBuffer(GL_ARRAY_BUFFER, buffer));  // Unbind ARRAY_BUFFER
+            // GLCall(glEnableVertexAttribArray(0));   // Exact usage forgot... do check it up online later
+            // GLCall(glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0));  // Check it up online later
+
+            GLCall(glBindVertexArray(vao));
+            ib.Bind();
+
+            GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));  // Draw call that uses the binded buffers to draw triangles
+
+            // Change color values in every loop
+            if (r > 1.0f)
+                increment_r = -0.03f;
+            else if (r < 0.0f)
+                increment_r = 0.03f;
+            r += increment_r;
+
+            if (g > 1.0f)
+                increment_g = -0.05f;
+            else if (g < 0.0f)
+                increment_g = 0.05f;
+            g += increment_g;
+
+            if (b > 1.0f)
+                increment_b = -0.07f;
+            else if (b < 0.0f)
+                increment_b = 0.07f;
+            b += increment_b;
 
 
-        /* Swap front and back buffers */
-        glfwSwapBuffers(window);
+            /* Swap front and back buffers */
+            glfwSwapBuffers(window);
 
-        /* Poll for and process events */
-        glfwPollEvents();
+            /* Poll for and process events */
+            glfwPollEvents();
+        }
+
+        glDeleteProgram(shader);
     }
-
-    glDeleteProgram(shader);
 
     glfwTerminate();
     return 0;
