@@ -14,6 +14,8 @@
 #include "Shader.h"
 #include "Texture.h"
 
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
 
 // Main program or entry point of application
 int main(void)
@@ -79,11 +81,16 @@ int main(void)
         // Generating Index Buffer
         IndexBuffer ib(indices, 6);
 
+        glm::mat4 proj = glm::ortho(-1.0f, 1.0f, -2.0f, 2.0f, -1.0f, 1.0f);
+
+
+
         // Generating shader
         Shader shader("res/shader/Basic.shader");
         shader.Bind();
 
         shader.SetUniform4f("u_Color", 0.2f, 0.8f, 0.3f, 1.0f);
+        shader.SetUniformMat4f("u_MVP", proj);
 
         // rgb values from 0.0f to 1.0f 
         float r = 0.0f;
