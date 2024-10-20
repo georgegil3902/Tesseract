@@ -11,6 +11,22 @@
     <ClCompile Include="src\vendor\stb_image\stb_image.cpp" />
     <ClCompile Include="src\vendor\glm\detail\glm.cpp" />
     <ClCompile Include="src\vendor\glm\glm.cppm" />
+    <ClCompile Include="src\vendor\imgui\backends\imgui_impl_allegro5.cpp" />
+    <ClCompile Include="src\vendor\imgui\backends\imgui_impl_android.cpp" />
+    <ClCompile Include="src\vendor\imgui\backends\imgui_impl_dx9.cpp" />
+    <ClCompile Include="src\vendor\imgui\backends\imgui_impl_dx10.cpp" />
+    <ClCompile Include="src\vendor\imgui\backends\imgui_impl_dx11.cpp" />
+    <ClCompile Include="src\vendor\imgui\backends\imgui_impl_dx12.cpp" />
+    <ClCompile Include="src\vendor\imgui\backends\imgui_impl_glut.cpp" />
+    <ClCompile Include="src\vendor\imgui\backends\imgui_impl_opengl2.cpp" />
+    <ClCompile Include="src\vendor\imgui\backends\imgui_impl_sdl2.cpp" />
+    <ClCompile Include="src\vendor\imgui\backends\imgui_impl_sdl3.cpp" />
+    <ClCompile Include="src\vendor\imgui\backends\imgui_impl_sdlrenderer2.cpp" />
+    <ClCompile Include="src\vendor\imgui\backends\imgui_impl_sdlrenderer3.cpp" />
+    <ClCompile Include="src\vendor\imgui\backends\imgui_impl_vulkan.cpp" />
+    <ClCompile Include="src\vendor\imgui\backends\imgui_impl_wgpu.cpp" />
+    <ClCompile Include="src\vendor\imgui\backends\imgui_impl_win32.cpp" />
+    <ClCompile Include="src\vendor\imgui\examples\example_glfw_opengl3\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shader\Basic.shader" />
@@ -450,5 +466,25 @@
     <ClInclude Include="src\vendor\glm\vec3.hpp" />
     <ClInclude Include="src\vendor\glm\vec4.hpp" />
     <ClInclude Include="src\vendor\glm\vector_relational.hpp" />
+    <ClInclude Include="src\vendor\imgui\backends\imgui_impl_allegro5.h" />
+    <ClInclude Include="src\vendor\imgui\backends\imgui_impl_android.h" />
+    <ClInclude Include="src\vendor\imgui\backends\imgui_impl_dx9.h" />
+    <ClInclude Include="src\vendor\imgui\backends\imgui_impl_dx10.h" />
+    <ClInclude Include="src\vendor\imgui\backends\imgui_impl_dx11.h" />
+    <ClInclude Include="src\vendor\imgui\backends\imgui_impl_dx12.h" />
+    <ClInclude Include="src\vendor\imgui\backends\imgui_impl_glut.h" />
+    <ClInclude Include="src\vendor\imgui\backends\imgui_impl_metal.h" />
+    <ClInclude Include="src\vendor\imgui\backends\imgui_impl_opengl2.h" />
+    <ClInclude Include="src\vendor\imgui\backends\imgui_impl_osx.h" />
+    <ClInclude Include="src\vendor\imgui\backends\imgui_impl_sdl2.h" />
+    <ClInclude Include="src\vendor\imgui\backends\imgui_impl_sdl3.h" />
+    <ClInclude Include="src\vendor\imgui\backends\imgui_impl_sdlrenderer2.h" />
+    <ClInclude Include="src\vendor\imgui\backends\imgui_impl_sdlrenderer3.h" />
+    <ClInclude Include="src\vendor\imgui\backends\imgui_impl_vulkan.h" />
+    <ClInclude Include="src\vendor\imgui\backends\imgui_impl_wgpu.h" />
+    <ClInclude Include="src\vendor\imgui\backends\imgui_impl_win32.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\images\image.png" />
   </ItemGroup>
 </Project>
