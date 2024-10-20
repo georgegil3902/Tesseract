@@ -54,10 +54,10 @@ int main(void)
     {
         // vertex positions
         float positions[] = {
-            -0.5f, -0.5f, 0.0f, 0.0f,   // 0
-             0.5f, -0.5f, 1.0f, 0.0f,   // 1
-             0.5f,  0.5f, 1.0f, 1.0f,   // 2
-            -0.5f,  0.5f, 0.0f, 1.0f    // 3
+            0.0f, 0.0f, 0.0f, 0.0f,   // 0
+            1280.0f, 0.0f, 1.0f, 0.0f,   // 1
+            1280.0f, 677.0f, 1.0f, 1.0f,   // 2
+            0.0f, 677.0f, 0.0f, 1.0f    // 3
         };
 
         // indices to draw triangles
@@ -81,16 +81,18 @@ int main(void)
         // Generating Index Buffer
         IndexBuffer ib(indices, 6);
 
-        glm::mat4 proj = glm::ortho(-1.0f, 1.0f, -2.0f, 2.0f, -1.0f, 1.0f);
+        glm::mat4 proj = glm::ortho(0.0f, 1280.0f, 0.0f, 677.0f, -1.0f, 1.0f);
+        glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
+        glm::mat4 model = glm::translate(glm::mat4(1.0f), glm::vec3(0, -300, 0));
 
-
+        glm::mat4 mvp = proj * view * model;
 
         // Generating shader
         Shader shader("res/shader/Basic.shader");
         shader.Bind();
 
         shader.SetUniform4f("u_Color", 0.2f, 0.8f, 0.3f, 1.0f);
-        shader.SetUniformMat4f("u_MVP", proj);
+        shader.SetUniformMat4f("u_MVP", mvp);
 
         // rgb values from 0.0f to 1.0f 
         float r = 0.0f;
@@ -101,6 +103,10 @@ int main(void)
         float increment_g = 0.05f;
         float increment_b = 0.07f;
 
+		int h = 0;
+		int h_i = 1;
+		int v = 0;
+		int v_i = 1;
 
         Texture texture("res/images/image.png");
         texture.Bind();
@@ -121,6 +127,21 @@ int main(void)
 
             shader.Bind();
             shader.SetUniform4f("u_Color", r, g, b, 1.0f);
+
+            if (h > 300)
+                h_i = -1;
+            else if (h < -300)
+                h_i = 1;
+			if (v > 300)
+				v_i = -1;
+			else if (v < -300)
+				v_i = 1;
+			h += h_i;
+			v += v_i;
+			model = glm::translate(glm::mat4(1.0f), glm::vec3(v, h, 0));
+			mvp = proj * view * model;
+
+			shader.SetUniformMat4f("u_MVP", mvp);
 
             renderer.Draw(va, ib, shader);
 
