@@ -12,6 +12,7 @@
 #include "IndexBuffer.h"
 #include "VertexArray.h"
 #include "Shader.h"
+#include "Texture.h"
 
 
 // Main program or entry point of application
@@ -49,10 +50,10 @@ int main(void)
     {
         // vertex positions
         float positions[] = {
-            -0.5f, -0.5f,
-             0.5f, -0.5f,
-             0.5f,  0.5f ,
-            -0.5f ,  0.5f,
+            -0.5f, -0.5f, 0.0f, 0.0f,   // 0
+             0.5f, -0.5f, 1.0f, 0.0f,   // 1
+             0.5f,  0.5f, 1.0f, 1.0f,   // 2
+            -0.5f,  0.5f, 0.0f, 1.0f    // 3
         };
 
         // indices to draw triangles
@@ -63,10 +64,11 @@ int main(void)
 
         // Generating Vertex Array
         VertexArray va;
-        VertexBuffer vb(positions, 4 * 2 * sizeof(float));
+        VertexBuffer vb(positions, 4 * 4 * sizeof(float));
 
         VertexBufferLayout layout;
-        layout.Push<float>(2);
+		layout.Push<float>(2);
+		layout.Push<float>(2);
         va.AddBuffer(vb, layout);
 
         // Generating Index Buffer
@@ -86,6 +88,11 @@ int main(void)
         float increment_r = 0.03f;
         float increment_g = 0.05f;
         float increment_b = 0.07f;
+
+
+        Texture texture("res/images/image.png");
+        texture.Bind();
+        shader.SetUniform1i("u_Texture", 0);
 
         va.Unbind();
         vb.Bind();
