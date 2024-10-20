@@ -47,6 +47,8 @@ int main(void)
         std::cout << "GLEW Not Okay !!!" << std::endl;
     }
 
+
+    std::cout << glGetString(GL_VERSION) << std::endl;
     {
         // vertex positions
         float positions[] = {
@@ -61,6 +63,9 @@ int main(void)
             0, 1, 2,
             2, 3, 0
         };
+
+		GLCall(glEnable(GL_BLEND));
+		GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
         // Generating Vertex Array
         VertexArray va;
