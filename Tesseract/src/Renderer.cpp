@@ -17,3 +17,19 @@ bool GLLogCall(const char* function, const char* file, int line)
     }
     return true;
 }
+
+void Renderer::Clear() const
+{
+	glClear(GL_COLOR_BUFFER_BIT);   // Clear the screen
+
+}
+
+void Renderer::Draw(const VertexArray& va, const IndexBuffer& ib, const Shader& shader) const
+{
+	va.Bind();
+	ib.Bind();
+
+
+	GLCall(glDrawElements(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, nullptr));  // Draw call that uses the binded buffers to draw triangles
+
+}
