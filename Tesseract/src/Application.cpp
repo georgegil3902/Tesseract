@@ -1,4 +1,4 @@
-#include <GL/glew.h>
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 #include <iostream>
@@ -48,11 +48,12 @@ int main(void)
     glfwSwapInterval(1);
 
 
-    // Initialize glew and check if it is GLEW_OK
-    if (glewInit() != GLEW_OK) {
-        std::cout << "GLEW Not Okay !!!" << std::endl;
+    // Initialize GLAD and check if initialised succesfully
+    if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+    {
+        std::cout << "Failed to initialize OpenGL context" << std::endl;
+        return -1;
     }
-
 
     std::cout << glGetString(GL_VERSION) << std::endl;
     {
